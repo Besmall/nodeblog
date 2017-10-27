@@ -6,7 +6,7 @@ mongoose.Promise = global.Promise;
 //定义数据结构
 var userSchema = mongoose.Schema({
     name:String,
-    pwd:String,
+    pwd:Number,
     createtime:{
         default:new Date(),
         type:Date

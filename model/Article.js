@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 //建立连接
-mongoose.connect('mongodb://localhost/article', { useMongoClient: true });
+mongoose.connect('mongodb://localhost/blog', { useMongoClient: true });
 mongoose.Promise = global.Promise;
 
 //定义数据结构

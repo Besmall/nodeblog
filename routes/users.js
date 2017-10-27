@@ -28,14 +28,13 @@ router.post('/logging', function(req, res, next) {
       });
       user.save(function(err,data){
         if(err) {
-          res.redirect("/users/logging");
+          res.json({status:-1,msg:"注册失败"});
         }else{
-          res.redirect("/users/login");
+          res.json({status:1,msg:"注册成功"});
         }
       });
     }else{
-      res.redirect("/users/logging");
-      console.log("用户名已存在")
+        res.json({status:-1,msg:"用户名已存在"});
     }
   }); 
 });

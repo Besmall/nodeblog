@@ -14,6 +14,7 @@ router.post('/', function(req, res, next) {
         content:req.body.content
     });
     article.save(function(err,data){
+        console.log(err)
         if(err) res.end("发布失败");
         res.end("发布成功")
     });
