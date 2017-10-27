@@ -23,16 +23,36 @@
 
     <div class="container">
 
-      <form class="form-signin" method="post" action="/users/logging">
+      <form id="loggingForm" class="form-signin" method="post" action="/users/logging">
         <h3 class="form-signin-heading">请注册</h3>
         <label for="username" class="sr-only">用户名</label>
         <input type="text" id="username" name="username" class="form-control" placeholder="用户名" required autofocus>
+        <span id="msg" style="color:red;"></span>
         <label for="pwd" class="sr-only">密码</label>
         <input type="password" id="pwd" name="pwd" class="form-control" placeholder="密码" required>
+        <span id="msg" style="color:red;"></span>
         <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
       </form>
 
     </div> <!-- /container -->
-
+    <script src="/javascripts/jquery.min1.8.3.js"></script>
+    <script>
+      $("#loggingForm").submit(function(){
+        $.ajax({
+          url:"/users/logging",
+          type:"post",
+          data:$("#loggingForm").serialize(),
+          success:function(data){
+            if(data.status == -1){
+              $("#msg").text(data.msg).show();
+            }else{
+              $("#msg").text(data.msg).hide();
+              location.href="/users/login";
+            }
+          }
+        });
+        return false; 
+      });
+    </script>
   </body>
 </html>
