@@ -5,6 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var lessMiddleware = require('less-middleware');
+var session = require('express-session');
+//session持久化模块
+var MongoStore = require('connect-mongo')(session);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -24,6 +27,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+var mongoose = require('mongoose');
+//建立连接
+mongoose.connect('mongodb://localhost/blog', { useMongoClient: true });
+mongoose.Promise = global.Promise;
+
+//session持久化
+app.use(session({
+  secret: 'nodeblog',
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
+}))
 
 app.use('/', index);
 app.use('/users', users);

@@ -7,14 +7,39 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-//注册路由
-router.get('/logging', function(req, res, next) {
-  res.render('users/logging');
-});
+
 
 //登录路由
 router.get('/login', function(req, res, next) {
   res.render('users/login');
+});
+
+//登录查询
+router.post('/login', function(req, res, next) {
+  var {username,pwd} = req.body;
+  User.find({name:username,pwd:pwd},function(err,data){
+    if(err) {
+      res.json({status:-1,msg:"登录失败"});
+    }else if(data.length==0){
+      res.json({status:-1,msg:"用户名或密码不对"});
+    }else{
+      req.session.user = data[0];
+      res.json({status:1,msg:"登录成功"});
+    }
+  });
+});
+
+//退出session
+router.post("/signout",function(req,res,next){
+  req.session.destroy(function(err){
+    if(err)res.json({state:-1});
+    res.json({state:1})
+  })
+})
+
+//注册路由
+router.get('/logging', function(req, res, next) {
+  res.render('users/logging');
 });
 
 //注册添加数据库

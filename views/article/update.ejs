@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>文章发布</title>
+    <title>修改文章</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/stylesheets/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -21,35 +21,35 @@
 
     <div class="container">
 
-      <form class="form-signin" method="post" action="/article/addarticle">
-          <div class="form-group" style="float:right;">
-              <h3>欢迎回来：<%=username%></h3>
-            </div>
+      <form class="form-signin" method="post" action="/article/update">
             <div class="form-group">
-              <h2>发布文章</h2>
+              <h2>修改文章</h2>
             </div>
           
             <div class="form-group">
               <label for="title">文章标题</label>
-              <input type="text" class="form-control" id="title" name="title" placeholder="文章标题">
+              <input type="text" class="form-control" id="title" name="title" value="<%=data.title%>" placeholder="文章标题">
             </div>
             <div class="form-group">
               <label for="author">作者</label>
-              <input type="text" class="form-control" id="author" name="author" placeholder="作者">
+              <input type="text" class="form-control" id="author" name="author" value="<%=data.author%>" placeholder="作者">
             </div>
             <div class="form-group">
               <label for="note">标签</label>
-              <input type="text" class="form-control" id="note" name="note" placeholder="标签">
+              <input type="text" class="form-control" id="note" name="note" value="<%=data.note%>" placeholder="标签">
             </div>
             <div class="form-group">
                 <label for="content">文章内容</label>
-                <textarea class="form-control" rows="5"  id="content" name="content" placeholder="文章内容" required autofocus></textarea>
+                <textarea class="form-control" rows="5"  id="content" name="content" placeholder="文章内容" required autofocus>
+                    <%=data.content%>
+                </textarea>
               </div>
             <div class="form-group">
               <label for="upimg">上传图片</label>
               <input type="file" id="upimg" name="upimg">
             </div>
-            <button type="submit" class="btn btn-default">发布</button>
+            <input type="hidden" name="shujuid" value="<%=data._id%>"/>
+            <button type="submit" class="btn btn-default">修改</button>
       </form>
 
     </div> <!-- /container -->

@@ -9,6 +9,7 @@ var articleSchema = mongoose.Schema({
     author:String,
     note:String,
     content:String,
+    upimg:String,
     createtime:{
         default:new Date(),
         type:Date

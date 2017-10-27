@@ -1,12 +1,28 @@
 var express = require('express');
 var Article = require('../model/Article');
+var renzheng = require('../common/renzheng');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-    res.render('article/addarticle');
+//中间件
+router.use(renzheng)
+
+/* 
+    文章列表路由
+    文章列表操作
+ */
+router.get('/',function(req, res, next) {
+    Article.find(function(err,data){
+        res.render('article/article',{articles:data});
+    }) 
 });
-//发布文章
-router.post('/', function(req, res, next) {
+
+//文章发布操作
+router.get('/addarticle',function(req, res, next) {
+    res.render('article/addarticle',{username:req.session.user.name});
+});
+//发布文章操作
+router.post('/addarticle', function(req, res, next) {
+    
     var article = new Article({
         title:req.body.title,
         author:req.body.author,
@@ -14,10 +30,30 @@ router.post('/', function(req, res, next) {
         content:req.body.content
     });
     article.save(function(err,data){
-        console.log(err)
-        if(err) res.end("发布失败");
-        res.end("发布成功")
+        if(err){
+            res.redirect("/article/addarticle");
+        }else{
+            res.redirect("/article/");
+        }
     });
-  });
+});
 
+//文章修改路由
+router.get('/update/:id',function(req, res, next) {
+    Article.find({_id:req.params.id},function(err,data){
+        if(err) return handleError(err);
+        res.render('article/update',{data:data[0]});
+    })
+});
+
+
+//操作修改
+router.post('/update',function(req, res, next) {
+    //es6写法
+    let = {title,author,note,content,shujuid}=req.body;
+    Article.update({ _id:shujuid } , {title,author,note,content}, function (err) {
+        if(err)return console.error(err);
+        res.redirect("/article/");
+    });
+});
 module.exports = router;
