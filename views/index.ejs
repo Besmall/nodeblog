@@ -1,32 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>文章列表</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/stylesheets/bootstrap/bootstrap.min.css" rel="stylesheet">
+
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <input type="button" name="" id="" value="退出" onclick="tuichu()">
 
-    <ul>
-      <li><a href="/article/addarticle">发布文章</a></li>
-      <li><a href="/article/">文章列表</a></li>
-    </ul>
-
+<body>
+    <% include include/head.ejs %>
+    <div class="container">
+        <h3 id="tables-bordered">文章列表</h3>
+        <div class="" data-example-id="bordered-table">
+            <table class="table table-bordered">
+            
+                <tbody>
+                <% for(var i=0 ; i<articles.length ; i++){ %>
+                    <tr>
+                    
+                        <td><%=articles[i].title%></td>
+                        <td>
+                            <a href="/articlelist/<%=articles[i]._id%>">查看</a>
+                        </td>
+                    
+                    </tr> 
+                <% } %>           
+                </tbody>
+            </table>
+        </div>
+    </div>
     <script src="/javascripts/jquery.min1.8.3.js"></script>
-    <script>
-      function tuichu(){
-        $.post("/users/signout",function(data){
-          if(data.state==1){
-            alert("退出成功");
-            location.href="/users/login";
-          }else{
-            alert("退出失败")
-          }
-        })
-      }
-      
-    </script>
-  </body>
+
+</body>
 </html>

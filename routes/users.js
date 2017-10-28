@@ -1,10 +1,14 @@
 var express = require('express');
 var User = require('../model/User');
+//引用认证模块
+var author = require('../common/author');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+/* 获取文章管理页面 */
+//多个中间件（权限认证路由拦截）
+router.get('/',author.renzheng,author.norenzheng,function(req, res, next) {
+  //显示模板用render
+  res.render('users/index',{username:req.session.user.name}); 
 });
 
 

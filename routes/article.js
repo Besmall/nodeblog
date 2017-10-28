@@ -1,14 +1,14 @@
 var express = require('express');
 var Article = require('../model/Article');
-var renzheng = require('../common/renzheng');
+var author = require('../common/author');
 var router = express.Router();
 
 //中间件
-router.use(renzheng)
+router.use(author.renzheng,author.norenzheng)
 
 /* 
-    文章列表路由
-    文章列表操作
+    文章列表详情路由
+    文章列表详情操作
  */
 router.get('/',function(req, res, next) {
     Article.find(function(err,data){
@@ -56,4 +56,27 @@ router.post('/update',function(req, res, next) {
         res.redirect("/article/");
     });
 });
+
+/* Student.remove({ name: 'xiaowangba' }, function (err) {
+    if (err) return handleError(err);
+    console.log("removed!"); 
+  }); */
+//删除文章操作
+router.post('/del', function(req, res, next) {
+    let = articleID=req.body.articleID;
+    Article.remove({ _id:articleID }, function (err) {
+        var obj = {};
+        if(err){
+            obj={
+                status : -1
+            };
+        }else{
+            obj={
+                status : 1
+            };
+        }
+        res.json(obj);
+    });
+});
+
 module.exports = router;

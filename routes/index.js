@@ -1,13 +1,29 @@
 var express = require('express');
-//引用认证模块
-var renzheng = require('../common/renzheng');
+var Article = require('../model/Article');
+var author = require('../common/author');
 var router = express.Router();
 
 /* GET home page. */
 //多个中间件（权限认证路由拦截）
-router.get('/', renzheng,function(req, res, next) {
+router.get('/',author.norenzheng,function(req, res, next) {
+  Article.find(function(err,data){
+      res.render('index',{articles:data});
+  }) 
     //显示模板用render
-    res.render('index', { title: '我的首页' }); 
+});
+
+//文章详情页面
+/* router.get('/articlelist',function(req, res, next) {
+  Article.find(function(err,data){
+      res.render('articlelist',{articles:data});
+  }) 
+}); */
+
+router.get('/articlelist/:id',author.norenzheng,function(req, res, next) {
+  Article.find({_id:req.params.id},function(err,data){
+      if(err) return handleError(err);
+      res.render('articlelist',{articles:data[0]});
+  })
 });
 
 

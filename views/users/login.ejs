@@ -20,21 +20,19 @@
   </head>
 
   <body>
-
+  <% include ../include/head.ejs %>
     <div class="container">
 
       <form id="loginForm" class="form-signin" method="post" action="">
-        <h3 class="form-signin-heading">请登录</h3>
-        <label for="username" class="sr-only">用户名</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="用户名" required autofocus>
-        <span id="msg" style="color:red;"></span>
-        <label for="pwd" class="sr-only">密码</label>
-        <input type="password" id="pwd" name="pwd" class="form-control" placeholder="密码" required>
-        <span id="msg" style="color:red;"></span>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-        <a href="/users/logging" class="btn btn-lg btn-primary btn-block" style="display:block">注册</a>
-      </form>
-
+          <h3 class="form-signin-heading">请登录</h3>
+          <label for="username" class="sr-only">用户名</label>
+          <input type="text" id="username" name="username" class="form-control" placeholder="用户名" required autofocus>
+          <span id="msg" style="color:red;"></span>
+          <label for="pwd" class="sr-only">密码</label>
+          <input type="password" id="pwd" name="pwd" class="form-control" placeholder="密码" required>
+          <span id="msg" style="color:red;"></span>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button> 
+        </form>
     </div> <!-- /container -->
 
     <script src="/javascripts/jquery.min1.8.3.js"></script>
@@ -49,7 +47,7 @@
               $("#msg").text(data.msg).show();
             }else{
               $("#msg").text(data.msg).hide();
-              location.href="/";
+              location.href="/article";
             }
           }
         });

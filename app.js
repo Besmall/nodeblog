@@ -9,6 +9,8 @@ var session = require('express-session');
 //session持久化模块
 var MongoStore = require('connect-mongo')(session);
 
+var helpers = require('view-helpers');
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 var article = require('./routes/article');
@@ -38,6 +40,8 @@ app.use(session({
   secret: 'nodeblog',
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }))
+
+app.use(helpers('app name'))
 
 app.use('/', index);
 app.use('/users', users);
